@@ -31,8 +31,8 @@ class BerryApp(tk.Tk):
         container.pack(side="top", fill="both", expand=True)
         # container.grid_rowconfigure(0, minsize=600, weight=1)
         # container.grid_columnconfigure(0, minsize=1000, weight=1)
-        container.grid_rowconfigure(0, minsize=1050, weight=1)
-        container.grid_columnconfigure(0, minsize=1050, weight=1)
+        container.grid_rowconfigure(0, minsize=600, weight=1)
+        container.grid_columnconfigure(0, minsize=1000, weight=1)
 
         self.frames = {}
         for F in (StartPage, PageOne, AboutPage, HelpPage, HelpPage1, HelpPage2, HelpPage3, IdentifyPage, MapPage, Catalog):
