@@ -559,6 +559,9 @@ class MapPage(tk.Frame):
                 conn.close()
         #map buttons
 
+        def load():
+            mv.mapView().loadMap()
+
         AddMarker = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8', text="Add Marker", command = AddmarkWindow)
         AddMarker.grid(column=0, row=0, padx=10, pady=5)
 
@@ -568,7 +571,7 @@ class MapPage(tk.Frame):
         List = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8' ,text="List", command= ListWindow)
         List.grid(column=0, row=2, padx=10, pady=5)
 
-        Map = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8', text="Map", command= mv.mapView().loadMap())
+        Map = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8', text="Map", command= load)
         Map.grid(column=0, row=3, padx=10, pady=5)
 
 
