@@ -15,7 +15,8 @@ from exif import Image as Photo
 Jeffin: Worked on Outline, transition between pages, and classes (BerryApp, PageOne, About, Help 1-3, Identify, Map, and Catalog Page)
 David: Worked on Identify page, trained and implemented the model
 Sunshine: Worked on Catalog page and Database
-Jaspreet: Worked on Map page and Database"""
+Jaspreet: Worked on Map page and Database
+Walter: Worked on visual map"""
 
 
 #Jeffin code start
@@ -520,11 +521,21 @@ class MapPage(tk.Frame):
                 return decimal_degrees
 
             for index, image in enumerate(images):
+
                 if image.has_exif:
-                        AddmarkWindow.latitude = f"{dd_coords(image.gps_latitude, image.gps_latitude_ref)}"
-                        AddmarkWindow.longitude = f"{dd_coords(image.gps_longitude, image.gps_longitude_ref)}"
-                        latitude_entry.insert(0, AddmarkWindow.latitude)
-                        longitude_entry.insert(0,  AddmarkWindow.longitude)
+
+                    myList = image.list_all()
+
+                    if 'gps_latitude' in myList:
+                        if 'gps_longitude' in myList:
+                            AddmarkWindow.latitude = f"{dd_coords(image.gps_latitude, image.gps_latitude_ref)}"
+                            AddmarkWindow.longitude = f"{dd_coords(image.gps_longitude, image.gps_longitude_ref)}"
+                            latitude_entry.insert(0, AddmarkWindow.latitude)
+                            longitude_entry.insert(0,  AddmarkWindow.longitude)
+                        else:
+                            pass
+                    else:
+                        pass
                 else:
                     pass
             
