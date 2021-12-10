@@ -339,21 +339,25 @@ class IdentifyPage(tk.Frame):
             # Open file dialog box
             image_data = filedialog.askopenfilename(initialdir="/", title="Choose an image",
                                        filetypes=(("all files", "*.*"), ("png files", "*.png")))
-            basewidth = 150
-            img = Image.open(image_data)
-            wpercent = (basewidth / float(img.size[0]))
-            hsize = int((float(img.size[1]) * float(wpercent)))
-            img = img.resize((basewidth, hsize), Image.ANTIALIAS)
-            img = ImageTk.PhotoImage(img)
-            file_name = image_data.split('/')
 
-            # Print file name onto page
-            panel = tk.Label(label_frame, text= str(file_name[len(file_name)-1]).upper()).pack()
+            if image_data:
+                basewidth = 150
+                img = Image.open(image_data)
+                wpercent = (basewidth / float(img.size[0]))
+                hsize = int((float(img.size[1]) * float(wpercent)))
+                img = img.resize((basewidth, hsize), Image.ANTIALIAS)
+                img = ImageTk.PhotoImage(img)
+                file_name = image_data.split('/')
 
-            # Print image onto page
-            panel_image = tk.Label(label_frame, image=img).pack()
+                # Print file name onto page
+                panel = tk.Label(label_frame, text= str(file_name[len(file_name)-1]).upper()).pack()
 
-            classify()
+                # Print image onto page
+                panel_image = tk.Label(label_frame, image=img).pack()
+
+                classify()
+            else:
+                pass
 
         def classify():
 
