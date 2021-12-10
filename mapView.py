@@ -33,7 +33,10 @@ class mapView():
     def loadMap(self):
 
         # create new PyQt5 app
-        app = QtWidgets.QApplication(sys.argv)
+
+        app = QtWidgets.QApplication.instance()
+        if app is None:
+            app = QtWidgets.QApplication(sys.argv)
         # make the window for that app
         window = QtWebEngineWidgets.QWebEngineView()
         # load html from disk and show window
