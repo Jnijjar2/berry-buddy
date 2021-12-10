@@ -417,7 +417,7 @@ class IdentifyPage(tk.Frame):
 
 # Jaspreet's Code Start
 class MapPage(tk.Frame):
-    
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg="#e2c7d8")
         self.controller = controller
@@ -435,7 +435,7 @@ class MapPage(tk.Frame):
         menubar_frame.place(relx=0.038, rely=0.010, anchor=N)
 
         LineSpaces.btnspace(self)
-        
+
         label_frame = tk.Frame(self,bg="#95658B")
         label_frame.pack(fill='both',expand=True)
 
@@ -443,20 +443,20 @@ class MapPage(tk.Frame):
         cur = conn.cursor()
 
         cur.execute("""CREATE TABLE IF NOT EXISTS amtable (
-        Berry_Name text, 
-        Latitude real, 
+        Berry_Name text,
+        Latitude real,
         longitude real
         )
         """)# creates a table if it doesn't already exist
 
-        conn.commit() #commit 
+        conn.commit() #commit
 
         conn.close()
-        
+
         #Add marker button window
         def AddmarkWindow():
-           
-         
+
+
             amwind = tk.Toplevel(self, bg='#E2C7D8')#creates window on top of existing window
             Markername_text = tk.Label(amwind, text="Marker Name :",bg='#E2C7D8')
             latitude_text = tk.Label(amwind, text="Latitude :",bg='#E2C7D8')
@@ -481,7 +481,7 @@ class MapPage(tk.Frame):
 
         def savemarker():
                  #save submitted marker info to the table in database
-                
+
                     conn = sl.connect("berries.db")
                     cur = conn.cursor()
                     cur.execute("INSERT INTO amtable VALUES (:Markername, :latitude, :longitude)",
@@ -494,30 +494,31 @@ class MapPage(tk.Frame):
 
                     conn.commit()
                     conn.close()
-                    
+
                     Markername_entry.delete(0, END)#clears entry box
                     latitude_entry.delete(0, END)
                     longitude_entry.delete(0, END)
-        
+                    mv.mapView().updateMap()
+
         def gpsimage():
             global image_data
             file_types = [('Jpg Files', '*.jpg')]
             image_data = filedialog.askopenfilename(filetypes=file_types)
-            
+
             with open(image_data, "rb") as gpsimg:
-            
+
                 gps_image = Photo(gpsimg)
 
             global images
             images=[gps_image]
-            
+
 
             def dd_coords(coordinates, coordinates_ref):
                 decimal_degrees = coordinates[0] + coordinates[1] / 60 + coordinates[2] / 3600
-    
+
                 if coordinates_ref == "S" or coordinates_ref == "W":
                    decimal_degrees = -decimal_degrees
-    
+
                 return decimal_degrees
 
             for index, image in enumerate(images):
@@ -532,20 +533,21 @@ class MapPage(tk.Frame):
                             AddmarkWindow.longitude = f"{dd_coords(image.gps_longitude, image.gps_longitude_ref)}"
                             latitude_entry.insert(0, AddmarkWindow.latitude)
                             longitude_entry.insert(0,  AddmarkWindow.longitude)
+                            mv.mapView().updateMap()
                         else:
                             pass
                     else:
                         pass
                 else:
                     pass
-            
-            
+
+
 
         def DelmarkWindow():
             #delete marker button window
 
             dmwind = tk.Toplevel(self, bg='#E2C7D8')
-        
+
             Numid_text = tk.Label(dmwind, text="Marker Number ID: ",bg='#E2C7D8')
             Numid_text.grid(column=1,row=0, padx=45, pady=5)
             global MarkerID_entry
@@ -555,7 +557,7 @@ class MapPage(tk.Frame):
             delbutton.grid(column=1,row=2, padx=45, pady=5)
             del_allbutton = tk.Button(dmwind,text="Delete All", command=delall, width="11",height="1",bg="#E2C7D8")
             del_allbutton.grid(column=1,row=3, padx=(45), pady=10)
-            
+
         def delmark():
                 conn = sl.connect("berries.db")
                 cur = conn.cursor()
@@ -563,21 +565,23 @@ class MapPage(tk.Frame):
                 conn.commit()
                 conn.close()
                 MarkerID_entry.delete(0, END)
+                mv.mapView().updateMap()
         def delall():
                 conn = sl.connect("berries.db")
                 cur = conn.cursor()
                 cur.execute("DELETE FROM amtable;",);#deletes all entries in table
                 conn.commit()
-                conn.close()   
+                conn.close()
+                mv.mapView().updateMap()
 
         def ListWindow():
-       
-            
-            
-            listmarker()   
+
+
+
+            listmarker()
             print_records
             lmwind = tk.Toplevel(self, bg='#E2C7D8')
-        
+
             my_mainframe=tk.Frame(lmwind)
             my_mainframe.pack(fill=BOTH, expand=1)
             my_canvas = tk.Canvas(my_mainframe,bg='white', highlightbackground= "#95658B", highlightthickness= 4)
@@ -586,7 +590,7 @@ class MapPage(tk.Frame):
             my_scrollbar.pack(side=RIGHT, fill=Y)
             my_canvas.configure(yscrollcommand=my_scrollbar.set)
             my_canvas.bind('<Configure>', lambda e: my_canvas.configure(scrollregion=my_canvas.bbox("all")))
-            
+
             Listframe=tk.Frame(my_canvas, bg='white')
             Listframe.pack()
             Markerlist_text = tk.Label(Listframe, text="Marker List",bg='white')
@@ -594,15 +598,15 @@ class MapPage(tk.Frame):
             Markerlist = tk.Label(Listframe, text=print_records, bg="white")
             Markerlist.pack()
             my_canvas.create_window((0,0), window = Listframe, anchor="nw")
-        
+
         def listmarker():
                 conn = sl.connect("berries.db")
                 cur = conn.cursor()
                 cur.execute("SELECT *, oid FROM amtable")
-            
+
                 conn.commit()
-            
-                
+
+
                 all_rec = cur.fetchall() #fetches all records in table
                 global print_records
                 print_records= ''
@@ -610,19 +614,19 @@ class MapPage(tk.Frame):
                     print_records += str(record[3]) + "\t" + str(record[0])+ " " + " " + str(record[1]) + " " + " " + str(record[2]) +"\n"
                 conn.close()
         #map buttons
-        
+
         def load():
             mv.mapView().loadMap()
 
         AddMarker = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8', text="Add Marker", command = AddmarkWindow)
-        AddMarker.grid(column=0, row=0, padx=10, pady=5) 
+        AddMarker.grid(column=0, row=0, padx=10, pady=5)
 
         DelMarker = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8', text="Delete Marker", command = DelmarkWindow)
-        DelMarker.grid(column=0, row=1, padx=10, pady=5) 
+        DelMarker.grid(column=0, row=1, padx=10, pady=5)
 
         List = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8' ,text="List", command= ListWindow)
-        List.grid(column=0, row=2, padx=10, pady=5) 
-        
+        List.grid(column=0, row=2, padx=10, pady=5)
+
         Map = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8', text="Map", command= load)
         Map.grid(column=0, row=3, padx=10, pady=5)
 
@@ -630,9 +634,9 @@ class MapPage(tk.Frame):
         button_frame.pack(fill='both',expand=True)
         def back():
             controller.show_frame('PageOne')
-        
+
         home_button = tk.Button(button_frame, text='Home', command=back, highlightbackground="#e2c7d8", foreground="black")
-        
+
         button1 = Button(button_frame, text="Homepage", width=8,
                          highlightbackground="pink", foreground="black", command=back)
         home_button.grid(row=2, column=6, sticky=tk.S)
