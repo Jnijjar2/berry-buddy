@@ -8,7 +8,7 @@ import numpy as np
 from tkinter import ttk
 import sqlite3 as sl
 
-import mapView
+import mapView as mv
 
 """Authorship
 Jeffin: Worked on Outline, transition between pages, and classes (BerryApp, PageOne, About, Help 1-3, Identify, Map, and Catalog Page)
@@ -564,10 +564,10 @@ class MapPage(tk.Frame):
         List = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8' ,text="List", command= ListWindow)
         List.grid(column=0, row=2, padx=10, pady=5)
 
-        Map = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8', text="Map", command= mapView.loadMap())
+        Map = tk.Button(label_frame, width=11, height=1, bg='#E2C7D8', text="Map", command= mv.mapView().loadMap())
         Map.grid(column=0, row=3, padx=10, pady=5)
 
-        
+
         #button frame hosting the back button
         button_frame = tk.Frame(self, bg="#95658B")
         button_frame.pack(fill='both',expand=True)
