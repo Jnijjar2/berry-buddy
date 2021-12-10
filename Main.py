@@ -7,6 +7,7 @@ from keras.models import load_model
 import numpy as np
 from tkinter import ttk
 import sqlite3 as sl
+from sunshine.Catalog import Catalog
 
 import mapView as mv
 
@@ -28,11 +29,13 @@ class BerryApp(tk.Tk):
         # will be raised above the others
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
-        container.grid_rowconfigure(0, minsize=600, weight=1)
-        container.grid_columnconfigure(0, minsize=1000, weight=1)
+        # container.grid_rowconfigure(0, minsize=600, weight=1)
+        # container.grid_columnconfigure(0, minsize=1000, weight=1)
+        container.grid_rowconfigure(0, minsize=1050, weight=1)
+        container.grid_columnconfigure(0, minsize=1050, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, AboutPage, HelpPage, HelpPage1, HelpPage2, HelpPage3, IdentifyPage, MapPage, CatalogPage):
+        for F in (StartPage, PageOne, AboutPage, HelpPage, HelpPage1, HelpPage2, HelpPage3, IdentifyPage, MapPage, Catalog):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -130,7 +133,8 @@ class PageOne(tk.Frame):
         map_button = tk.Button(button_frame, text='Map', width=8, command=map, highlightbackground="#e2c7d8", foreground="black")
 
         def catalog():
-            controller.show_frame('CatalogPage')
+            controller.show_frame('Catalog')
+
         catalog_button = tk.Button(button_frame, text='Catalog', width=8, command=catalog, highlightbackground="#e2c7d8", foreground="black")
 
         logo_photo = tk.PhotoImage(file='berrylogo.gif')
@@ -584,134 +588,6 @@ class MapPage(tk.Frame):
         button_frame.place(relx=1, rely=1, anchor=tk.SE)
 
 # Jaspreet's Code End
-
-# Sunshine's Code Start
-con = sl.connect("berries.db")
-
-with con:
-    data = con.execute("SELECT * FROM BERRY")
-    for row in data:
-        print(row)
-
-class CatalogPage(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, bg="#e2c7d8")
-        self.controller = controller
-
-        ######start of menu bar frame######
-        menubar_frame = tk.Frame(self, bg="#e2c7d8")
-        menubar_frame.pack(fill='both',expand=True)
-
-        #help button(menu bar)
-        def help3():
-            controller.show_frame('HelpPage3')
-        help_button = tk.Button(menubar_frame, text='Help', width=8, command=help3, highlightbackground="#e2c7d8", foreground="black")
-        help_button.grid(row=0, column=0, sticky=E, )
-
-        menubar_frame.place(relx=0.038, rely=0.010, anchor=N)
-
-        LineSpaces.btnspace(self)
-
-        #####map label frame#####
-        label_frame = tk.Frame(self,bg="#95658B")
-        label_frame.pack(fill='both',expand=True)
-
-        label = ttk.Label(label_frame, text="Berry Buddy Catalog")
-        label2 = ttk.Label(label_frame, text="")
-        label3 = ttk.Label(label_frame, text="")
-        button2 = tk.Button(label_frame, text="Close", command=lambda: resetLabelText())
-
-        label.pack(pady=10)
-
-        # # Created entry box
-        myEntry = tk.Entry(label_frame, font=('Helvetica', 20))
-        myEntry.pack()
-        #
-        # # Create a list box
-        myList = tk.Listbox(label_frame, width=50)
-        myList.pack()
-
-        # Create a list of berries
-        berryNames = ['Gooseberry', 'Coffeeberry', 'Elderberry', 'Wild Grape', 'Cherry', 'Currant', 'Ground Cherry', 'Huckleberry',
-                      'Juniper', 'Nightshade', 'Raspberry', 'Serviceberry', 'Strawberry', 'Toyon']
-
-        # # Update the listbox
-        def update(data):
-            # Clear the listbox so it can reset each time a new berry is entered
-            myList.delete("0", "end")
-            # Add berries top listbox
-            # enumerate allows us to get the index
-            # loop goes through the list of berries in the box
-            for i, item in enumerate(data):
-                # i is the index and item is the berry itself
-                myList.insert(i, item)
-
-        # Update entry box with listbox clicked
-        def fillout(event):
-            # Deletes anything in the entry box
-            myEntry.delete(0, "end")
-
-            # Add clicked list item to entry box
-            myEntry.insert(0, myList.get("anchor"))
-            global BERRY_NAME
-            BERRY_NAME = myEntry.get()
-            if BERRY_NAME in berryNames:
-                with con:
-                    data = con.execute(f"SELECT * FROM BERRY WHERE name == '{myEntry.get()}'")
-                    result = data.fetchone()
-                    if result:
-                        label2.pack(pady=20)
-                        label2.config(text=result[1])
-                        label3.config(text=result[2])
-                        label3.pack(pady=20)
-                        # breaking... come back to fix because it is not destroying the labels, instead it is overlapping
-                        button2.pack()
-
-        # # Create function to check entry vs listbox
-        def check(event):
-            # Grab what was typed
-            typed = myEntry.get()
-            if typed == '':
-                # The berryNames list will show up if there is nothing in the search bar
-                data = berryNames
-            else:
-                data = []
-                for item in berryNames:
-                    if typed.lower() in item.lower():
-                        data.append(item)
-
-            # Updates our listbox with selected items
-            update(data)
-
-        #
-        # # Add berryNames to list
-        update(berryNames)
-        #
-        # # Create a binding on the listbox onclick... predicts entry based on what is in the listbox
-        myList.bind('<<ListboxSelect>>', fillout)
-        #
-        # # Create a binding on the entry box
-        myEntry.bind('<KeyRelease>', check)
-
-        def resetLabelText():
-            label2.config(text='')
-            label3.config(text='')
-            myEntry.delete("0", "end")
-
-        #button frame hosting the back button
-        button_frame = tk.Frame(self, bg="#95658B")
-        button_frame.pack(fill='both',expand=True)
-        def back():
-            resetLabelText()
-            controller.show_frame('PageOne')
-
-        home_button = tk.Button(button_frame, text='Home', command=back, width=8, highlightbackground="#e2c7d8", foreground="black")
-
-        home_button.grid(row=2, column=6, sticky=tk.S)
-        button_frame.place(relx=1, rely=1, anchor=tk.SE)
-
-# Sunshine's Code End
 
 if __name__ == "__main__":
     app = BerryApp()
