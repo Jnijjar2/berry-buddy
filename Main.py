@@ -505,12 +505,15 @@ class MapPage(tk.Frame):
             file_types = [('Jpg Files', '*.jpg')]
             image_data = filedialog.askopenfilename(filetypes=file_types)
 
-            with open(image_data, "rb") as gpsimg:
+            if image_data:
+                with open(image_data, "rb") as gpsimg:
 
-                gps_image = Photo(gpsimg)
+                    gps_image = Photo(gpsimg)
 
-            global images
-            images=[gps_image]
+                global images
+                images=[gps_image]
+            else:
+                pass
 
 
             def dd_coords(coordinates, coordinates_ref):
@@ -521,25 +524,28 @@ class MapPage(tk.Frame):
 
                 return decimal_degrees
 
-            for index, image in enumerate(images):
+            if image_data:
+                for index, image in enumerate(images):
 
-                if image.has_exif:
+                    if image.has_exif:
 
-                    myList = image.list_all()
+                        myList = image.list_all()
 
-                    if 'gps_latitude' in myList:
-                        if 'gps_longitude' in myList:
-                            AddmarkWindow.latitude = f"{dd_coords(image.gps_latitude, image.gps_latitude_ref)}"
-                            AddmarkWindow.longitude = f"{dd_coords(image.gps_longitude, image.gps_longitude_ref)}"
-                            latitude_entry.insert(0, AddmarkWindow.latitude)
-                            longitude_entry.insert(0,  AddmarkWindow.longitude)
-                            mv.mapView().updateMap()
+                        if 'gps_latitude' in myList:
+                            if 'gps_longitude' in myList:
+                                AddmarkWindow.latitude = f"{dd_coords(image.gps_latitude, image.gps_latitude_ref)}"
+                                AddmarkWindow.longitude = f"{dd_coords(image.gps_longitude, image.gps_longitude_ref)}"
+                                latitude_entry.insert(0, AddmarkWindow.latitude)
+                                longitude_entry.insert(0,  AddmarkWindow.longitude)
+                                mv.mapView().updateMap()
+                            else:
+                                pass
                         else:
                             pass
                     else:
                         pass
-                else:
-                    pass
+            else:
+                pass
 
 
 
