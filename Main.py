@@ -517,11 +517,13 @@ class MapPage(tk.Frame):
                 return decimal_degrees
 
             for index, image in enumerate(images):
-
+                if image.has_exif:
                         AddmarkWindow.latitude = f"{dd_coords(image.gps_latitude, image.gps_latitude_ref)}"
                         AddmarkWindow.longitude = f"{dd_coords(image.gps_longitude, image.gps_longitude_ref)}"
                         latitude_entry.insert(0, AddmarkWindow.latitude)
                         longitude_entry.insert(0,  AddmarkWindow.longitude)
+                else:
+                    pass
             
             
 
