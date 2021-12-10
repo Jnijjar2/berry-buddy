@@ -8,9 +8,8 @@ import numpy as np
 from tkinter import ttk
 import sqlite3 as sl
 from sunshine.Catalog import Catalog
-
 import mapView as mv
-from exif import Image
+from exif import Image as Photo
 
 """Authorship
 Jeffin: Worked on Outline, transition between pages, and classes (BerryApp, PageOne, About, Help 1-3, Identify, Map, and Catalog Page)
@@ -502,7 +501,7 @@ class MapPage(tk.Frame):
             
             with open(image_data, "rb") as gpsimg:
             
-                gps_image = Image(gpsimg)
+                gps_image = Photo(gpsimg)
 
             global images
             images=[gps_image]
