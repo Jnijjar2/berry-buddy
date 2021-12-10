@@ -1,3 +1,6 @@
+# written by: Walter Jordan
+# tested by: Jeff, David
+# debugged by: Walter, David
 # Walter's Code Begin
 
 import sqlite3 as sl
