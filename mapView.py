@@ -7,6 +7,8 @@ from PyQt5 import QtWidgets, QtWebEngineWidgets, QtCore
 
 class mapView():
 
+    app = None
+
     # updates map markers
     def updateMap(self):
 
@@ -33,9 +35,10 @@ class mapView():
     def loadMap(self):
 
         # create new PyQt5 app
+        global app
 
         app = QtWidgets.QApplication.instance()
-        if app is None:
+        if not app:
             app = QtWidgets.QApplication(sys.argv)
         # make the window for that app
         window = QtWebEngineWidgets.QWebEngineView()
