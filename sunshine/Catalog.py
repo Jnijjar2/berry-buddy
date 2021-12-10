@@ -1,11 +1,23 @@
+#  written by: Sunshine Moua
+#  tested by: Jeffin Abraham
+#  debugged by: Sunshine Moua
+
+
 import tkinter as tk
 from tkinter import Button
 from tkinter import ttk
 import sqlite3 as sl
 
+# Initialize empty array
+# This is where we will be pushing berry information
 berryNames = []
 
+# Connection to the database
 con = sl.connect("berries.db")
+
+# ********For lines 22-525, you need to run it ONCE to create the table
+# and push all information into the array. After the initial run, it needs to be COMMENTED OUT,
+# otherwise, the code will break because the table is already created ********
 
 # with con:
 #     con.execute("""
@@ -356,11 +368,164 @@ con = sl.connect("berries.db")
 #     Tools: Just a bag for collecting the berries.
 #
 #     """)
+#     (15, 'Madrone', """ Madrone is a shrub or tree with reddish bark that is typically shedding
+#     and curling. The leaves are alternate, leathery, and evergreen. Each leaf is oblong to
+#     ovate, 4 to 5 inches long, with small and shallow serrations. The white or pinkish
+#     flower petals are fused into a very characteristic down-hanging urn shape. The
+#     distinctive fruit is round, about ⅓ to ½ inch diameter, and orange red. The fruit is
+#     papillate, which means it is uniformly covered with small roundish bumps.
+#
+#     Uses: The fruits are used for food.
+#
+#     Habitats: Typically found in conifer and oak forests, usually in the lower elevations.
+#
+#     Range: From approximately Santa Barbara northward, more common the farther
+#     north you go. More common near the coast.
+#
+#     Tools: A bag or basket
+#
+#     """),
+#     (16, 'Oregon Grape or Barberry', """ This is a low-growing, medium-size shrub, though some are low-
+#     growing and spreading. Leaves are alternately arranged and pinnately compound.
+#     The leaflets are hollylike, with spines along their margins. Flowers are yellow and
+#     formed in racemes. The sepals and the petals are similar, usually in five whorls. The
+#     approximately ¼-inch fruits are bluish to purple berries, and are tightly arranged in
+#     clusters that resemble tiny grapes.
+#
+#     Uses: Fruits can be eaten, or made into wine, jams, jellies.
+#
+#     Habitats: Coniferous forests, slopes, canyons, oak woodlands, chaparral.
+#
+#     Range: Found throughout California, but less common south of Santa Barbara.
+#
+#     Tools: Collecting bag
+#
+#     """)
+#
+#     (17, 'Prickly Pear', """ Prickly pear cacti are readily recognized by their flat oval pads, with
+#     spines evenly spaced over their surface. The cacti flower by summer, and then the
+#     fruits mature by August and September. The fruits mature in a variety of colors,
+#     ranging from green (less common) to yellow, orange, red, and purple. Each of these
+#     fruits has a different flavor, and was traditionally used in different recipes.
+#
+#     Uses: Young pads for food, raw or cooked; fruits for deserts and juices; seeds for
+#     flour. Nearly all species of Opuntia have a long history of being used for food.
+#
+#     Habitats: Typically found in the desert regions, but also commonly found in
+#     chaparral, dry fields, along the coast, and commonly cultivated.
+#
+#     Range: Fairly widespread throughout the state, very common in certain areas. like
+#     the desert, chaparral, and where it is cultivated in urban or farm areas.
+#
+#     Tools: Metal tongs, sturdy bucket, possibly gloves.
+#
+#     Cautions: Occasionally, people have experienced sickness after eating certain
+#     varieties of prickly pear. In some cases, this is due to a negative reaction to the
+#     mucilaginous quality. According to Dr. Leonid Enari, the entire Cactus family is
+#     very safe for consumption. However, he would quickly add that some are much too
+#     woody for food. A very few are extremely bitter even after boiling and you'd not
+#     even consider using them for food. If you choose to experiment, just remember that
+#     palatability is the key. Any that have a white sap when cut are not cacti, but lookalike
+#     members of the Euphorbia group.
+#
+#     """),
+#
+#     (18, 'Rose Hip', """ Roses are a member of the Rose family (Rosacea), which contains 110 genera
+#     and 3,000 species worldwide. Species from forty-five of the genera are found in
+#     California. There are about 100 species of Rosa worldwide, which hybridize freely.
+#     There are twelve species in California, not including subspecies. Nine of these are
+#     natives, including the common Rosa californica.
+#
+#     Wild roses are thorny shrubs bearing commonly recognized, five-
+#     petaled roses that form into orange fruits.
+#
+#     Uses: The fruits are eaten raw, cooked, made into jam, made into tea; the wood is
+#     useful for arrow shafts.
+#
+#     Habitats: Typically riparian but found in many areas; cultivated roses are common
+#     in urban areas.
+#
+#     Range: Wild roses are somewhat widespread throughout the state; cultivated
+#     garden roses can be found everywhere.
+#
+#     Tools: Perhaps gloves.
+#
+#     Caution: Before you go wild rose collecting in your neighbor's rose patch, you
+#     should attempt to find out if your neighbor uses any "miracle chemicals" to produce
+#     beautiful, bug-free roses. Some systemic fertilizers and pesticides could get you sick.
+#     If in doubt do without.
+#
+#     """),
+#
+#     (19, 'Salal', """ Salal is a native shrub, with ovate leaves that are finely veined.
+#     The hanging lantern-type flowers make the relationship of the salal plant to the
+#     manzanita very clear. The flowers appear in a line along the stalk, and then as the
+#     berries develop, they are likewise in a line along the stalk. The berries are dark
+#     purple to more or less blue-black in color. When mature, the end of the fruit has
+#     what appears to be a five-point indented star.
+#
+#     The plant is a low-growing to medium-size evergreen shrub, with either
+#     spreading or erect stalks. It grows in moist areas along the margins of the forests,
+#     in some cases being the most dominant plant. The leaves are alternate, ovate to
+#     elliptical, about 3 to 4 inches in length. The leaves are finely toothed, leathery, and
+#     conspicuously veined.
+#
+#     Uses: Fruits are eaten.
+#
+#     Habitats: Salal is found in mixed evergreen forests, redwood forests, and amid the
+#     northern coastal scrub. You typically won't find it in wetlands.
+#
+#     Range: Salal is found generally along the coast, from the northern extremities of Los
+#     Angeles County northward.
+#
+#     Tools: Just a container for collecting.
+#     """)
+#
+#     (20, 'Blueberry', """ Blueberry shrubs have alternate evergreen or deciduous leaves, which are
+#     broadly lance-shaped. The stems are trailing to erect. The flower's petals generally
+#     number four to five, with a corolla that is cup- or urn-shaped. The fruits are blue,
+#     can be large or small, and have flattened ends. Generally, the plants with the most
+#     desirable fruits are the smaller shrubs, about 3 feet tall, with larger, sweet, juicy blue
+#     berries measuring about ¼-to ½-inch in diameter.
+#
+#     Uses: The fruits are edible.
+#
+#     Habitats: Found in the woods, usually coniferous woods, in clearings, moist areas,
+#     and shaded areas.
+#
+#     Range: Forest inhabitants, mostly found in the northern half of
+#     the state and into the Northwest.
+#
+#     Tools: A basket.
+#
+#     """),
+#
+#     (21, 'Cranberry', """ Cranberry shrubs have alternate evergreen or deciduous leaves, which are
+#     broadly lance-shaped. The stems are trailing to erect. The flower's petals generally
+#     number four to five, with a corolla that is cup- or urn-shaped. The fruits are bright red,
+#     can be large or small, and have flattened ends. Generally, the plants with the most
+#     desirable fruits are the smaller shrubs, about 3 feet tall, with larger, sweet, juicy red
+#     berries measuring about ¼-to ½-inch in diameter.
+#
+#     Uses: The fruits are edible.
+#
+#     Habitats: Found in the woods, usually coniferous woods, in clearings, moist areas,
+#     and shaded areas.
+#
+#     Range: Forest inhabitants, mostly found in the northern half of
+#     the state and into the Northwest.
+#
+#     Tools: A basket.
+#
+#     """)
+#
 # ]
 #
 # with con:
 #     con.executemany(sql, data)
 
+
+# Connection to database which selects berry id and description
 with con:
     data = con.execute("SELECT * FROM BERRY")
     result = data.fetchall()
@@ -374,22 +539,22 @@ class Catalog(tk.Frame):
         tk.Frame.__init__(self, parent, bg="#e2c7d8")
         self.controller = controller
 
-        # label_frame = tk.Frame(self,bg="#95658B")
+        label_frame = tk.Frame(self,bg="#95658B")
         # label_frame.pack(fill='both',expand=True)
 
-        # Put your code here with label_frame. Take test 1 out
         label = ttk.Label(self, text="Berry Buddy Catalog", font=('Helvetica', 30))
         label2 = ttk.Label(self, text="")
         label3 = ttk.Label(self, text="")
-        button2 = tk.Button(self, text="Close", command=lambda: resetLabelText())
+        button2 = tk.Button(self, text="Close", command=lambda: resetLabelText(), highlightbackground="#e2c7d8",
+                                foreground="black")
 
         label.pack(pady=10)
 
-        # # Created entry box
+        # Created entry box
         myEntry = tk.Entry(self, font=('Helvetica', 20))
         myEntry.pack()
         #
-        # # Create a list box
+        # Create a list box
         myList = tk.Listbox(self, width=50)
         myList.pack()
 
@@ -413,16 +578,18 @@ class Catalog(tk.Frame):
             myEntry.insert(0, myList.get("anchor"))
             global BERRY_NAME
             BERRY_NAME = myEntry.get()
+            # Checks to see if berry name entered matches any names in the database
+            # If yes, berry name and description is shown on the page
             if BERRY_NAME in berryNames:
                 with con:
                     data = con.execute(f"SELECT * FROM BERRY WHERE name == '{myEntry.get()}'")
                     result = data.fetchone()
                     if result:
-                        label2.pack(pady=20)
+                        button2.pack(side=tk.LEFT)
+                        label2.pack()
                         label2.config(text=result[1], font=('Helvetica', 30))
                         label3.config(text=result[2])
-                        label3.pack(pady=20)
-                        button2.pack(side=tk.BOTTOM)
+                        label3.pack(pady=5)
 
         # # Create function to check entry vs listbox
         def check(event):
@@ -440,24 +607,27 @@ class Catalog(tk.Frame):
             # Updates our listbox with selected items
             update(data)
 
-        #
-        # # Add berryNames to list
+
+        # Add berryNames to list
         update(berryNames)
-        #
-        # # Create a binding on the listbox onclick... predicts entry based on what is in the listbox
+
+        # Create a binding on the listbox onclick... predicts entry based on what is in the listbox
         myList.bind('<<ListboxSelect>>', fillout)
-        #
-        # # Create a binding on the entry box
+
+        # Create a binding on the entry box
         myEntry.bind('<KeyRelease>', check)
 
+        # Clears the name and description labels
         def resetLabelText():
             label2.config(text='')
             label3.config(text='')
             myEntry.delete("0", "end")
 
         button_frame = tk.Frame(self, bg="#95658B")
-        button_frame.pack(fill='both', expand=True)
+        button_frame.pack(side=tk.LEFT)
 
+        # calls resetLabelText to clear both labels
+        # navigates user to the main catalog page or home page when buttons are clicked
         def back():
             resetLabelText()
             controller.show_frame('PageOne')
@@ -467,8 +637,8 @@ class Catalog(tk.Frame):
 
         button1 = Button(button_frame, text="Homepage", width=8,
                          highlightbackground="pink", foreground="black", command=back)
-        home_button.grid(row=2, column=6, sticky=tk.S)
-        button_frame.place(relx=1, rely=1, anchor=tk.SE)
+        home_button.pack(side=tk.TOP, anchor=tk.W)
+        button_frame.pack(side=tk.TOP, anchor=tk.W)
 
 # Sunshine's Code End
 
