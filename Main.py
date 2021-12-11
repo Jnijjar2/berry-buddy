@@ -1,3 +1,9 @@
+"""
+main.py
+written by: Jeffin, David, Jaspreet
+tested by: Jeffin, David, Jaspreet
+debugged by: Jeffin, David, Jaspreet
+"""
 import tkinter as tk
 from tkinter import Button, font  as tkfont
 from tkinter.constants import CENTER, E, N, NW, TOP, VERTICAL, BOTH, RIGHT, LEFT, W, Y, END
@@ -11,12 +17,14 @@ from sunshine.Catalog import Catalog
 import mapView as mv
 from exif import Image as Photo
 
-"""Authorship
+"""
+Authorship
 Jeffin: Worked on Outline, transition between pages, and classes (BerryApp, PageOne, About, Help 1-3, Identify, Map, and Catalog Page)
 David: Worked on Identify page, trained and implemented the model
 Sunshine: Worked on Catalog page and Database
 Jaspreet: Worked on Map page and Database
-Walter: Worked on visual map"""
+Walter: Worked on visual map
+"""
 
 
 #Jeffin code start
