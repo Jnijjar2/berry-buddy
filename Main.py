@@ -4,8 +4,9 @@ written by: Jeffin, David, Jaspreet, Sunshine, Walter
 tested by: Jeffin, David, Jaspreet, Sunshine, Walter
 debugged by: Jeffin, David, Jaspreet, Sunshine, Walter
 """
+
 import tkinter as tk
-from tkinter import Button, font  as tkfont
+from tkinter import Button, Tk, font  as tkfont
 from tkinter.constants import CENTER, E, N, NW, TOP, VERTICAL, BOTH, RIGHT, LEFT, W, Y, END
 from PIL import ImageTk, Image, ImageOps
 from tkinter import filedialog
@@ -29,7 +30,7 @@ Walter: Worked on visual map
 
 #Jeffin code start
 class BerryApp(tk.Tk):
-
+    
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -42,7 +43,7 @@ class BerryApp(tk.Tk):
         # container.grid_columnconfigure(0, minsize=1000, weight=1)
         container.grid_rowconfigure(0, minsize=600, weight=1)
         container.grid_columnconfigure(0, minsize=1000, weight=1)
-
+        
         self.frames = {}
         for F in (StartPage, PageOne, AboutPage, HelpPage, HelpPage1, HelpPage2, HelpPage3, IdentifyPage, MapPage, Catalog):
             page_name = F.__name__
@@ -78,6 +79,8 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent, bg='#e2c7d8')
         self.controller = controller
         self.controller.title("BerryBuddy.exe")
+        photo = tk.PhotoImage(file = "berrylogo.png")
+        self.controller.iconphoto(False, photo) 
 
         LineSpaces.space(self)
 
