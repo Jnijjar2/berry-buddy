@@ -85,11 +85,7 @@ class StartPage(tk.Frame):
         LineSpaces.space(self)
 
         disclamer_label1 = tk.Label(self, fg='#F2F2F2', bg="#95658B", text="DISCLAMER", width=127, justify=CENTER)
-        disclamer_label = tk.Label(self, fg='#F2F2F2', bg="#95658B", text="""This application is not intended to supply toxicological advice. 
-        The creators of this application have referenced sources believed to be reliable in an effort to confirm the accuracy and completeness of the presented information herein. 
-        However, none of the creators warrant that the information is in every respect accurate or complete. 
-        The application is not intended for use when foraging for wild foods and we strongly recomment you do not handle or eat wild plants, many are poisonous and easily misidentified. 
-        In cases of accidental exposure or ingestion of toxic or poisonous berry varieties, contact a Poison Control Center (1-800-222-1222).""",
+        disclamer_label = tk.Label(self, fg='#F2F2F2', bg="#95658B", text="""This application is not intended to supply toxicological advice. The creators of this application have referenced sources believed to be reliable in an effort to confirm the accuracy and completeness of the presented information herein. However, none of the creators warrant that the information is in every respect accurate or complete. The application is not intended for use when foraging for wild foods and we strongly recomment you do not handle or eat wild plants, many are poisonous and easily misidentified. In cases of accidental exposure or ingestion of toxic or poisonous berry varieties, contact a Poison Control Center (1-800-222-1222).""",
         wraplength=895, width=127, justify=LEFT)
         disclamer_label1.pack()
         disclamer_label.pack()
